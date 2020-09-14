@@ -1,3 +1,9 @@
+/*
+ Router : 경로설정
+  spring : Controller 클래스로 선언
+  spring에서 Controller가 하는 일과 유사한 기능을 수행
+  client의 request 요청 주소를 분석하여 적절한 요청과 응답을 수행하는 역할
+ */
 var express = require('express');
 var router = express.Router();
 

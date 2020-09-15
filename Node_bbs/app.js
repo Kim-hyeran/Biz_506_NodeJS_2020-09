@@ -4,40 +4,45 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// nodeJS와 mongoDB를 연동하기 위해 mongoose 모듈 import
+var mongoose = require("mongoose");
+// db연결 객체 생성
+var dbConn = mongoose.connection;
+// id 이름이 설정된 tag를 클릭했을 때 수행할 event 핸들링
+// $("#id").on(click, function())
+// $("#id").click(function())
+// mongoose를 통하여 db에 연결을 시도했을 때, 정상적으로 open되면 console에 메시지 출력 
+dbConn.once("open", function() {
+  console.log(">>MongoDB Open")
+});
+// db와 연결하여 CRUD를 수행하는 과정에서 오류가 발생하면 그 오류 메시지를 console에 출력
+dbConn.on("error", function (error) {
+  console.err(error);
+});
+// mongoDB 서버
+mongoose.connect("mongodb://localhost/mybbs", {useNewUrlParser: true, useUnifiedTopology: true});
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var homeRouter = require("./routes/home");
+// bbsRouter.js import
+var bbsRouter = require("./routes/bbsRoute");
 
-//nodeJS 서버 생성자
 var app = express();
 
 // view engine setup
-// __dirname : nodeJS의 현재 시스템 폴더
-//             임의로 설정하지 않아도 이미 만들어져서 제공되는 변수
-// C:/workspace/nodeJS/Hello_Node
-// __dirname에 저장된 폴더 문자열과 views라는 문자열을 연결하여 하나의 path(폴더)로 지정
-// /WEB-INF/...
-// C:/workspace/nodeJS/Hello_Node/views
 app.set('views', path.join(__dirname, 'views'));
-// view파일 참조 views/*.pug
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-// resources 폴더처럼 Controller를 거치지 않고 직접 핸들링할 파일들을 저장하는 곳
 app.use(express.static(path.join(__dirname, 'public')));
 
-// localhost:3000/* 라고 요청하면 indexRouter에게 제어권 넘기기
 app.use('/', indexRouter);
-
-// localhost:3000/users/* 라고 요청하면 userRouter에게 제어권 넘기기
 app.use('/users', usersRouter);
-
-// localhost:3000/home/* 라고 요청하면 homeRouter에게 제어권 넘기기
-app.use("/home", homeRouter);
+// localhost:3000/bbs/*를 요청하면 bbsRouter 전달
+app.use("/bbs", bbsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

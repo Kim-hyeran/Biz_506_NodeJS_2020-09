@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 });
 
 // localhost:3000/home으로 요청하면 
-router.get("/home", function(req, res) {
+router.get("/home/index", function(req, res) {
   // 순수한 문자열을 client에게 전달하라
   res.send("우리나라 만세");
 });

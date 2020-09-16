@@ -13,7 +13,6 @@ router.post("/", function (req, res) {
   let m_user=req.body.m_user;
   let date=moment(new Date()).format("YYYY-MM-DD");
   let time=moment(new Date()).format("HH:mm:ss");
-  //let title = name + "님 반갑습니다";
 
   res.render("index", {title : m_user+"님 반갑습니다", date : date, time : time});
 });

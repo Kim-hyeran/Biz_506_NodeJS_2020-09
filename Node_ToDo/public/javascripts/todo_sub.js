@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (todo_data) {
         let todo_json=JSON.parse(todo_data);
         console.log(todo_json.todo);
-        todo_list.push(todo_data);
+        todo_list.push(todo_json);
     }
     
     // todo_list 배열 데이터가 있으면 localStorage에 저장하기

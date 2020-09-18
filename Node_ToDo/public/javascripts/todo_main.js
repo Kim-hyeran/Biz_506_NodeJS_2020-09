@@ -5,7 +5,7 @@
 
 var todo_list=[];
 // 페이지기 새로 시작되면 localStorage로부터 데이터 읽어오기
-let todo_list_store=localStorage.getItem("todo_list")
+let todo_list_store=localStorage.getItem("todo_list");
 if(todo_list_store) {
     // localStorage에서 가져온 데이터가 있으면 JSON형태로 변경하여 todo_list에 저장
     todo_list=JSON.parse(todo_list_store);
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if(todo_value==="") {
             alert("하고 싶은 일은 반드시 입력하세요");
             document.querySelectorAll("input")[0].focus();
-            // document.querySelector("section.todo_main form input[name='todo']").focus();
+            document.querySelector("section.todo_main form input[name='todo']").focus();
             return false;
         }
 
